@@ -50,8 +50,8 @@ var w = canvas.width; canvas.width = 1; canvas.width = w;
     draw()
   })
   window.addEventListener('touchstart', function(g){
-  draw(e.changedTouches[0].pageX, g.changedTouches[0].pageY);
-  draw(e.changedTouches[1].pageX, g.changedTouches[1].pageY);
+  draw(g.changedTouches[0].pageX, g.changedTouches[0].pageY);
+  draw(g.changedTouches[1].pageX, g.changedTouches[1].pageY);
 });
 
 window.addEventListener('touchmove', function(g){
