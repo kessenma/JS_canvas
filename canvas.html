@@ -22,23 +22,6 @@
 
 <script>
 
-  // Default draw Red Circle
-  var canvas = document.querySelector('canvas');
-  var ctx = canvas.getContext('2d');
-  var x = 0
-  var y = 0
-  var color = "red"
-  var radius = 20;
-
-
-function draw(){
-  ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.arc(x,y, radius,0,2*Math.PI);
-  ctx.fill();
-
-}
-
 // got this code from: https://stackoverflow.com questions/21043161/clear-canvas-button :
 function clearcanvas1(){
 ctx.clearRect(0, 0, canvas.width, canvas.height); 
@@ -54,10 +37,10 @@ var w = canvas.width; canvas.width = 1; canvas.width = w;
   draw(g.changedTouches[1].pageX, g.changedTouches[1].pageY);
 });
 
-window.addEventListener('touchmove', function(g){
-  g.preventDefault();
-  draw(g.changedTouches[0].pageX, g.changedTouches[0].pageY);
-  draw(g.changedTouches[1].pageX, g.changedTouches[1].pageY);
+window.addEventListener('touchmove', function(h){
+  h.preventDefault();
+  draw(h.changedTouches[0].pageX, h.changedTouches[0].pageY);
+  draw(h.changedTouches[1].pageX, h.changedTouches[1].pageY);
 });
   window.addEventListener('keydown', function (k) {
   if(k.keyCode == 66){
@@ -67,6 +50,22 @@ window.addEventListener('touchmove', function(g){
     color ="yellow"
   }
   })
+
+  function draw(){
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.arc(x,y, radius,0,2*Math.PI);
+  ctx.fill();
+
+}
+
+  // Default draw Red Circle
+  var canvas = document.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  var x = 0
+  var y = 0
+  var color = "red"
+  var radius = 20;
 
 
 
