@@ -19,7 +19,7 @@
 </head>
   
 <body>
-      <canvas id="canvas" width="1200"  height="700">
+      <canvas id="canvas" >
       </canvas>
 
       <!-- Color picker  -->
@@ -37,6 +37,8 @@
     var y = 0
     var color = "red"
     var radius = 10;
+    canvas.height = window.innerHeight *.8
+    canvas.width = window.innerWidth *.8
 
 //Color Picker (Suhas helped me with this)
     var theInput = document.getElementById("colorpicker");
@@ -50,16 +52,24 @@
     ctx.fill();
     }
 
-//Dynamic Canvas resizing
-function initialize() {
-// Register an event listener to
-// call the resizeCanvas() function each time 
-// the window is resized.
-    window.addEventListener('resize', resizeCanvas, false);
 
-// Draw canvas border for the first time.
-    resizeCanvas();
-    }
+    // function myFunction() {
+    // var w = window.outerWidth;
+    // var h = window.outerHeight;
+    // var txt = "Window size: width=" + w + ", height=" + h;
+    // document.getElementById("demo").innerHTML = txt;
+  // }
+// //Dynamic Canvas resizing
+//     function initialize() {
+// // Register an event listener to
+// // call the resizeCanvas() function each time 
+// // the window is resized.
+//     window.addEventListener('resize', resizeCanvas, false);
+
+// // Draw canvas border for the first time.
+//     resizeCanvas();
+//     }
+
 
 // Display custom canvas.
 // In this case it's a blue, 5 pixel border that 
