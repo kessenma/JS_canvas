@@ -2,15 +2,24 @@
 
 <!DOCTYPE html>
   <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-        <title>Canvas Example</title>
-    </head>
-  </html>
-
+  <head>
+    <meta charset="UTF-8">
+    <title>Canvas Example</title>
+    <style type="text/css">
+      canvas{border: 1px solid black;}
+      html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      border: 0;
+      overflow: hidden; /*  Disable scrollbars */
+      display: block;  /* No floating content on sides */
+      }
+    </style>
+</head>
+  
 <body>
-      <canvas id="canvas" width="500" height="500">
-      An alternative text describing what your canvas displays. 
+      <canvas id="canvas" width="1200"  height="700">
       </canvas>
 
       <!-- Color picker  -->
@@ -18,71 +27,120 @@
 
       <!-- Clear canvas button -->
       <button onclick="clearcanvas1()">clear</button>
-</body>
-
-<style type="text/css">
-      canvas{border: 1px solid black;}
-</style>
 
 <script> 
-      //Clear Canvas JS
-      // got this code from: https://stackoverflow.com questions/21043161/clear-canvas-button
-      function clearcanvas1(){
-      ctx.clearRect(0, 0, canvas.width, canvas.height); 
-      var w = canvas.width; canvas.width = 1; canvas.width = w; 
-      }
 
-      //Tracking mouse movements to draw
-        window.addEventListener('mousemove', function (e) {
-          x = e.pageX;
-          y = e.pageY;
-          draw();
-        })
+// Default draw Red Circle
+    var canvas = document.querySelector('canvas');
+    var ctx = canvas.getContext('2d');
+    var x = 0
+    var y = 0
+    var color = "red"
+    var radius = 10;
 
-      //Tracking touch input to draw 
-        window.addEventListener('touchstart', function(g){
-        draw(g.changedTouches[0].pageX, g.changedTouches[0].pageY);
-        draw(g.changedTouches[1].pageX, g.changedTouches[1].pageY);
-      });
+//Color Picker (Suhas helped me with this)
+    var theInput = document.getElementById("colorpicker");
+    theInput.addEventListener("input", function() { color = theInput.value;
+    }, false);
 
-      window.addEventListener('touchmove', function(h){
-        h.preventDefault();
-        draw(h.changedTouches[0].pageX, h.changedTouches[0].pageY);
-        draw(h.changedTouches[1].pageX, h.changedTouches[1].pageY);
-      });
+    function draw(){
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(x,y, radius,0,2*Math.PI);
+    ctx.fill();
+    }
 
-      //Allows users to use their keyboard to change colors. clicking b = blue, clicking y = yellow
-        window.addEventListener('keydown', function (k) {
-        if(k.keyCode == 66){
-          color = "blue";
-        }
-        if(k.keyCode == 89){
-          color ="yellow";
-        }
-        if(k.keyCode == 89){
-          function clearcanvas1(){
-          ctx.clearRect(0, 0, canvas.width, canvas.height); 
-          var w = canvas.width; canvas.width = 1; canvas.width = w; 
-      }
-        }})
+//Dynamic Canvas resizing
+function initialize() {
+// Register an event listener to
+// call the resizeCanvas() function each time 
+// the window is resized.
+    window.addEventListener('resize', resizeCanvas, false);
 
-      //Color Picker (Suhas helped me with this)
-        var theInput = document.getElementById("colorpicker");
-         theInput.addEventListener("input", function() { color = theInput.value;
-          }, false);
-        
-        function draw(){
-        ctx.beginPath();
-        ctx.fillStyle = color;
-        ctx.arc(x,y, radius,0,2*Math.PI);
-        ctx.fill();
+// Draw canvas border for the first time.
+    resizeCanvas();
+    }
 
-      }
-        // Default draw Red Circle
-        var canvas = document.querySelector('canvas');
-        var ctx = canvas.getContext('2d');
-        var x = 0
-        var y = 0
-        var color = "red"
-        var radius = 20;
+// Display custom canvas.
+// In this case it's a blue, 5 pixel border that 
+// resizes along with the browser window.         
+    function redraw() {
+    context.strokeStyle = 'blue';
+    context.lineWidth = '5';
+    context.strokeRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+
+// Runs each time the DOM window resize event fires.
+// Resets the canvas dimensions to match window,
+// then draws the new borders accordingly.
+    function resizeCanvas() {
+    htmlCanvas.width = window.innerWidth;
+    htmlCanvas.height = window.innerHeight;
+    redraw();
+    }
+
+//Clear Canvas JS
+// got this code from: https://stackoverflow.com questions/21043161/clear-canvas-button
+    function clearcanvas1() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    var w = canvas.width; canvas.width = 1; canvas.width = w; 
+    }
+
+//Tracking mouse movements to draw
+    window.addEventListener('mousemove', function (e) {
+    x = e.pageX;
+    y = e.pageY;
+    draw();
+    });
+
+// Touchscreen
+    window.addEventListener("touchmove", function(m) {
+    x = m.pageX;
+    y = m.pageY;
+    draw();
+    })
+// Change Orientation
+    window.addEventListener("orientationchange", function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, false);
+
+//Allows users to use their keyboard to change colors. clicking b = blue, clicking y = yellow
+    window.addEventListener('keydown', function (k) {
+    if(k.keyCode == 66){
+    color = "blue";
+    }
+    if(k.keyCode == 89){
+    color ="yellow";
+    }
+    if(k.keyCode == 71){
+    color ="green";
+    }
+    })
+
+// Clear Canvas
+    window.addEventListener("keydown", function(s) {
+    if(s.keyCode==32) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    })
+
+window.addEventListener("keydown", function(r) {
+//"+" increases size of pen
+    if(r.keyCode==187) {                         
+    radius += 1;
+    //"-" increases size of pen
+    }
+    if(r.keyCode==189 && radius > 1) {                
+    radius -= 1;
+    }
+    })
+
+// Change Orientation
+    window.addEventListener("orientationchange", function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, false);
+
+
 </script>
+</body>
+</html>
