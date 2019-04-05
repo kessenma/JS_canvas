@@ -111,8 +111,8 @@
     })
 // Change Orientation
     window.addEventListener("orientationchange", function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }, false);
+    location.reload();
+    })
 
 //Allows users to use their keyboard to change colors. clicking b = blue, clicking y = yellow
     window.addEventListener('keydown', function (k) {
